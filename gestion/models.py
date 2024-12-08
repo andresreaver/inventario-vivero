@@ -1,4 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+class CustomUser(AbstractUser):
+    ROLE_CHOICES = (
+        ('admin', 'Administrador'),
+        ('user', 'Usuario'),
+    )
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
 
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=200, unique=True)
@@ -39,5 +47,22 @@ class Producto(models.Model):
 
     def stock_bajo(self):
         return self.stock < self.stock_minimo
+
+    from gestion.models import CustomUser
+
+    def crear_usuario_admin(self):
+        user = CustomUser.objects.create_user(
+            username='admin_user',
+            password='secure_password',
+            email='admin@example.com',
+            role='admin',
+        )
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+
+
+
+
 
 

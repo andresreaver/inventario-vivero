@@ -1,5 +1,8 @@
 from django.contrib import admin
 from .models import Producto, Proveedor, Compra, Venta
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from .models import CustomUser
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
@@ -23,3 +26,10 @@ class VentaAdmin(admin.ModelAdmin):
     list_filter = ('fecha', )
 
 #Register your Models Here
+
+
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    fieldsets = UserAdmin.fieldsets + (
+        ('Información Adicional', {'fields': ('role',)}),
+    )
