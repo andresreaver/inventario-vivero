@@ -1,6 +1,13 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 from gestion.services.compra_service import CompraService
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from gestion.models.compra import Compra
+
+@login_required
+def compras(request):
+    compras = Compra.objects.all()
+    return render(request, 'compras.html', {'compras': compras})
+
 
 @login_required
 def lista_compras(request):
