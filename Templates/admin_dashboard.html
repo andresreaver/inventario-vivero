@@ -5,88 +5,162 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administrador</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f3f4ed; /* Fondo neutro y limpio */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .navbar {
+            background-color: #4caf50; /* Verde vivo de la marca */
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #ffffff;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            background-color: #4caf50;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .btn-success {
+            background-color: #4caf50;
+            border-color: #4caf50;
+        }
+
+        .btn-success:hover {
+            background-color: #45a049;
+            border-color: #45a049;
+        }
+
+        .btn-danger {
+            background-color: #d9534f;
+            border-color: #d9534f;
+        }
+
+        .btn-danger:hover {
+            background-color: #c9302c;
+            border-color: #c9302c;
+        }
+
+        .table th {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .form-control:focus {
+            border-color: #4caf50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <h1>Bienvenido, Administrador</h1>
-        <p>Desde aquí puedes gestionar todos los usuarios del sistema.</p>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Vivero Andalucía</a>
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger">Cerrar Sesión</a>
+        </div>
+    </nav>
 
-        <!-- Formulario para Crear Usuarios -->
-        <h2>Crear Usuario</h2>
-        <form method="post">
-            {% csrf_token %}
-            <input type="hidden" name="create_user" value="1">
-            <div class="row mb-3">
-                <div class="col">
-                    <input type="text" name="username" placeholder="Nombre de usuario" class="form-control" required>
-                </div>
-                <div class="col">
-                    <input type="email" name="email" placeholder="Correo electrónico" class="form-control" required>
-                </div>
-                <div class="col">
-                    <input type="password" name="password" placeholder="Contraseña" class="form-control" required>
-                </div>
-                <div class="col">
-                    <select name="role" class="form-select">
-                        <option value="admin">Administrador</option>
-                        <option value="user">Usuario</option>
-                    </select>
-                </div>
-                <div class="col form-check">
-                    <input type="checkbox" name="is_staff" class="form-check-input"> Staff
-                    <input type="checkbox" name="is_superuser" class="form-check-input"> Superusuario
-                </div>
-                <div class="col">
-                    <button type="submit" class="btn btn-success">Crear Usuario</button>
-                </div>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                Bienvenido, Administrador
             </div>
-        </form>
+            <div class="card-body">
+                <p class="text-center">Desde aquí puedes gestionar todos los usuarios del sistema.</p>
+
+                <!-- Formulario para Crear Usuarios -->
+                <h5 class="text-success mb-3">Crear Usuario</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="create_user" value="1">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <input type="text" name="username" placeholder="Nombre de usuario" class="form-control" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="email" name="email" placeholder="Correo electrónico" class="form-control" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="password" name="password" placeholder="Contraseña" class="form-control" required>
+                        </div>
+                        <div class="col-md-2">
+                            <select name="role" class="form-select">
+                                <option value="admin">Administrador</option>
+                                <option value="user">Usuario</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1 text-center">
+                            <button type="submit" class="btn btn-success">Crear</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <!-- Tabla para Listar y Editar Usuarios -->
-        <h2>Lista de Usuarios</h2>
-        <table class="table table-striped mt-4">
-            <thead>
-                <tr>
-                    <th>Usuario</th>
-                    <th>Email</th>
-                    <th>Rol</th>
-                    <th>Es Staff</th>
-                    <th>Es Superusuario</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                <tr>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.role }}</td>
-                    <td>{{ user.is_staff }}</td>
-                    <td>{{ user.is_superuser }}</td>
-                    <td>
-                        <form method="post" style="display: inline;">
-                            {% csrf_token %}
-                            <input type="hidden" name="update_user" value="1">
-                            <input type="hidden" name="user_id" value="{{ user.id }}">
-                            <select name="role" class="form-select form-select-sm d-inline w-auto">
-                                <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Administrador</option>
-                                <option value="user" {% if user.role == 'user' %}selected{% endif %}>Usuario</option>
-                            </select>
-                            <input type="checkbox" name="is_staff" {% if user.is_staff %}checked{% endif %}> Staff
-                            <input type="checkbox" name="is_superuser" {% if user.is_superuser %}checked{% endif %}> Superusuario
-                            <button type="submit" class="btn btn-sm btn-success">Actualizar</button>
-                        </form>
-                        <form method="post" style="display: inline;">
-                            {% csrf_token %}
-                            <input type="hidden" name="delete_user" value="1">
-                            <input type="hidden" name="user_id" value="{{ user.id }}">
-                            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="card">
+            <div class="card-header">
+                Lista de Usuarios
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Es Staff</th>
+                            <th>Es Superusuario</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.role }}</td>
+                            <td>{{ user.is_staff|yesno:"Sí,No" }}</td>
+                            <td>{{ user.is_superuser|yesno:"Sí,No" }}</td>
+                            <td>
+                                <!-- Formulario para Actualizar Usuario -->
+                                <form method="post" style="display: inline-block;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="update_user" value="1">
+                                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                                    <button type="submit" class="btn btn-sm btn-success">Actualizar</button>
+                                </form>
+                                <!-- Formulario para Eliminar Usuario -->
+                                <form method="post" style="display: inline-block;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="delete_user" value="1">
+                                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
