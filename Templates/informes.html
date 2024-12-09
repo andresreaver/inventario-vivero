@@ -1,0 +1,36 @@
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Informes{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Informes</h1>
+    <p>Resumen de las estadísticas del vivero.</p>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5>Total Compras</h5>
+                <p class="display-6">{{ total_compras }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5>Total Ventas</h5>
+                <p class="display-6">{{ total_ventas }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5>Productos con Bajo Stock</h5>
+                <p class="display-6">{{ productos_bajo_stock }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
