@@ -1,19 +1,23 @@
 from gestion.models import CustomUser
 
+
 class UserService:
     @staticmethod
     def crear_usuario(username, email, password, role='user', is_superuser=False, is_staff=False):
         """Crea un nuevo usuario en el sistema."""
-        user = CustomUser.objects.create_user(
-            username=username,
-            email=email,
-            password=password
-        )
-        user.role = role
-        user.is_superuser = is_superuser
-        user.is_staff = is_staff
-        user.save()
-        return user
+        try:
+            user = CustomUser.objects.create_user(
+                username=username,
+                email=email,
+                password=password
+            )
+            user.role = role
+            user.is_superuser = is_superuser
+            user.is_staff = is_staff
+            user.save()
+            return user
+        except Exception as e:
+            raise ValueError(f"Error al crear el usuario: {str(e)}")
 
     @staticmethod
     def obtener_usuarios():
@@ -21,16 +25,26 @@ class UserService:
         return CustomUser.objects.all()
 
     @staticmethod
-    def actualizar_usuario(user_id, **kwargs):
+    def actualizar_usuario(user_id, role=None, is_superuser=False, is_staff=False):
         """Actualiza un usuario existente."""
-        user = CustomUser.objects.get(id=user_id)
-        for key, value in kwargs.items():
-            setattr(user, key, value)
-        user.save()
-        return user
+        try:
+            user = CustomUser.objects.get(id=user_id)
+            if role:
+                user.role = role
+            user.is_superuser = bool(is_superuser)
+            user.is_staff = bool(is_staff)
+            user.save()
+            return user
+        except CustomUser.DoesNotExist:
+            raise ValueError("El usuario no existe.")
+        except Exception as e:
+            raise ValueError(f"Error al actualizar el usuario: {str(e)}")
 
     @staticmethod
     def eliminar_usuario(user_id):
         """Elimina un usuario del sistema."""
-        user = CustomUser.objects.get(id=user_id)
-        user.delete()
+        try:
+            user = CustomUser.objects.get(id=user_id)
+            user.delete()
+        except CustomUser.DoesNotExist:
+            raise ValueError("El usuario no existe.")

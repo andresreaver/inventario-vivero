@@ -15,6 +15,7 @@
         <h5 class="text-success mb-3">Crear Usuario</h5>
         <form method="post">
             {% csrf_token %}
+            <input type="hidden" name="create_user" value="1">
             <div class="row g-3">
                 <div class="col-md-3">
                     <input type="text" name="username" placeholder="Nombre de usuario" class="form-control" required>
@@ -65,12 +66,21 @@
                     <td>{{ user.is_staff|yesno:"Sí,No" }}</td>
                     <td>{{ user.is_superuser|yesno:"Sí,No" }}</td>
                     <td>
+                        <!-- Botón para Actualizar Usuario -->
                         <form method="post" style="display: inline-block;">
                             {% csrf_token %}
                             <input type="hidden" name="update_user" value="1">
                             <input type="hidden" name="user_id" value="{{ user.id }}">
+                            <select name="role" class="form-select form-select-sm d-inline w-auto">
+                                <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Administrador</option>
+                                <option value="user" {% if user.role == 'user' %}selected{% endif %}>Usuario</option>
+                            </select>
+                            <input type="checkbox" name="is_staff" {% if user.is_staff %}checked{% endif %}> Staff
+                            <input type="checkbox" name="is_superuser" {% if user.is_superuser %}checked{% endif %}> Superusuario
                             <button type="submit" class="btn btn-sm btn-success">Actualizar</button>
                         </form>
+
+                        <!-- Botón para Eliminar Usuario -->
                         <form method="post" style="display: inline-block;">
                             {% csrf_token %}
                             <input type="hidden" name="delete_user" value="1">
