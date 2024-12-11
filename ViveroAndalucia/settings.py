@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'ViveroAndalucia.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Vivero',
-        'USER': 'postgres',
-        'PASSWORD': 'Edilma5422',
+        'NAME': 'inventario_db',
+        'USER': 'inventario_user',
+        'PASSWORD': 'Admin123',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -101,7 +101,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.cont'
+                'rib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
