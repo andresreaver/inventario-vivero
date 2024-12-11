@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Proveedores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .button-container {
+            text-align: right;
+        }
+        .button-container button {
+            padding: 10px 15px;
+            font-size: 14px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            width: 60%;
+            max-height: 90%;
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h2 {
+            margin: 0;
+        }
+        .modal-header button {
+            background-color: transparent;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+        .modal-header button:hover {
+            color: red;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .action-button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .action-edit {
+            background-color: #ffc107;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .action-edit:hover {
+            background-color: #e0a800;
+        }
+        .action-delete {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .action-delete:hover {
+            background-color: #c82333;
+        }
+        select, input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: none;
+        }
+        .sub-section {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .dual-box {
+            display: flex;
+            gap: 20px;
+        }
+    </style>
+    <script>
+        let editingRow = null;
+
+        function openModal(edit = false, row = null) {
+            document.getElementById('modal').style.display = 'flex';
+            if (edit && row) {
+                editingRow = row;
+                const cells = row.getElementsByTagName('td');
+                document.getElementById('nit_cedula').value = cells[0].textContent;
+                document.getElementById('nombre_razon').value = cells[1].textContent;
+                document.getElementById('telefono').value = cells[2].textContent;
+                document.getElementById('email').value = cells[3].textContent;
+                document.getElementById('direccion').value = cells[4].textContent;
+                // Fill bank account fields and other dependencies here if needed
+            } else {
+                document.getElementById('providerForm').reset();
+                editingRow = null;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function addOrUpdateProvider(event) {
+            event.preventDefault();
+
+            const nit = document.getElementById('nit_cedula').value;
+            const nombre = document.getElementById('nombre_razon').value;
+            const telefono = document.getElementById('telefono').value;
+            const correo = document.getElementById('email').value;
+            const direccion = document.getElementById('direccion').value;
+
+            if (editingRow) {
+                const cells = editingRow.getElementsByTagName('td');
+                cells[0].textContent = nit;
+                cells[1].textContent = nombre;
+                cells[2].textContent = telefono;
+                cells[3].textContent = correo;
+                cells[4].textContent = direccion;
+            } else {
+                const table = document.getElementById('providerTable').getElementsByTagName('tbody')[0];
+                const newRow = table.insertRow();
+                newRow.innerHTML = `
+                    <td>${nit}</td>
+                    <td>${nombre}</td>
+                    <td>${telefono}</td>
+                    <td>${correo}</td>
+                    <td>${direccion}</td>
+                    <td>
+                        <button class="action-button action-edit" onclick="openModal(true, this.parentElement.parentElement)">Editar</button>
+                        <button class="action-button action-delete" onclick="deleteProvider(this)">Eliminar</button>
+                    </td>
+                `;
+            }
+
+            closeModal();
+        }
+
+        function deleteProvider(button) {
+            if (confirm('¿Está seguro de que desea eliminar este proveedor?')) {
+                const row = button.parentElement.parentElement;
+                row.remove();
+            }
+        }
+
+        function addResponsibility() {
+            const source = document.getElementById("responsibilities_list");
+            const target = document.getElementById("selected_responsibilities");
+
+            Array.from(source.selectedOptions).forEach(option => {
+                if (![...target.options].some(opt => opt.value === option.value)) {
+                    const newOption = document.createElement("option");
+                    newOption.value = option.value;
+                    newOption.textContent = option.textContent;
+                    target.appendChild(newOption);
+                }
+            });
+        }
+
+        function removeResponsibility() {
+            const target = document.getElementById("selected_responsibilities");
+            Array.from(target.selectedOptions).forEach(option => option.remove());
+        }
+    </script>
+</head>
+<body>
+    <h1>Gestión de Proveedores</h1>
+
+    <div class="button-container">
+        <button onclick="openModal()">Nuevo Proveedor</button>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Crear/Editar Proveedor</h2>
+                <button onclick="closeModal()">&times;</button>
+            </div>
+            <form id="providerForm" onsubmit="addOrUpdateProvider(event)">
+                <!-- Datos básicos -->
+                <label for="nit_cedula">NIT o Cédula:</label>
+                <input type="text" id="nit_cedula" name="nit_cedula" required>
+
+                <label for="tipo">Tipo:</label>
+                <select id="tipo" name="tipo" required>
+                    <option value="31">NIT (31)</option>
+                    <option value="13">Cédula (13)</option>
+                    <option value="22">Cédula de Extranjería (22)</option>
+                    <option value="43">Código Extranjero (43)</option>
+                    <option value="12">Tarjeta de Identidad o NIO (12)</option>
+                    <option value="11">Registro Civil (11)</option>
+                    <option value="41">Pasaporte (41)</option>
+                </select>
+
+                <label for="nombre_razon">Nombre o Razón Social:</label>
+                <input type="text" id="nombre_razon" name="nombre_razon" required>
+
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" required>
+
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="direccion">Dirección:</label>
+                <textarea id="direccion" name="direccion" rows="2" required></textarea>
+
+                <!-- Dependencia: Responsabilidades DIAN -->
+                <div class="sub-section">
+                    <h3>Responsabilidades DIAN</h3>
+                    <div class="dual-box">
+                        <div>
+                            <label for="responsibilities_list">Seleccione una responsabilidad:</label>
+                            <select id="responsibilities_list" multiple>
+                                <option value="01">01. Aporte especial para la administración de justicia</option>
+                                <option value="02">02. Gravamen a los Movimientos Financieros (GMF)</option>
+                                <option value="03">03. Impuesto al Patrimonio</option>
+                                <option value="04">04. Impuesto Sobre la Renta y Complementarios Régimen Tributario Especial</option>
+                                <option value="05">05. Impuesto Sobre la Renta y Complementarios Régimen Ordinario</option>
+                                <option value="06">06. Ingresos y patrimonio</option>
+                                <option value="07">07. Retención en la Fuente a título de renta</option>
+                                <option value="08">08. Retención Timbre Nacional</option>
+                                <option value="09">09. Retención en la Fuente en el Impuesto Sobre las Ventas</option>
+                                <option value="10">10. Obligado aduanero</option>
+                                <option value="13">13. Gran contribuyente</option>
+                                <option value="14">14. Informante de Exógena</option>
+                                <option value="15">15. Autorretenedor</option>
+                                <option value="16">16. Obligación de facturar por ingresos de bienes y/o servicios excluidos</option>
+                                <option value="17">17. Profesionales de compra y venta de divisas</option>
+                                <option value="18">18. Precios de Transferencia</option>
+                                <option value="19">19. Productor y/o exportador de bienes exentos</option>
+                                <option value="20">20. Obtención NIT</option>
+                                <option value="21">21. Declarar el ingreso o salida del país de divisas o moneda legal colombiana</option>
+                                <option value="22">22. Obligado a cumplir deberes formales a nombre de terceros</option>
+                                <option value="23">23. Agente de retención en el impuesto sobre las ventas</option>
+                                <option value="26">26. Declaración Informativa Individual Precios de transferencia</option>
+                                <option value="32">32. Impuesto Nacional a la Gasolina y al ACPM</option>
+                                <option value="33">33. Impuesto Nacional al Consumo</option>
+                                <option value="36">36. Establecimiento Permanente</option>
+                                <option value="39">39. Proveedor de Servicios Tecnológicos (PST)</option>
+                                <option value="41">41. Declaración anual de activos en el exterior</option>
+                                <option value="42">42. Obligado a llevar contabilidad</option>
+                                <option value="45">45. Autorretenedor de rendimientos financieros</option>
+                                <option value="46">46. IVA Prestadores de Servicios desde el Exterior</option>
+                                <option value="47">47. Régimen Simple de Tributación (SIMPLE)</option>
+                                <option value="48">48. Impuesto sobre las ventas (IVA)</option>
+                                <option value="49">49. No responsable de IVA</option>
+                                <option value="50">50. No responsable de Consumo restaurantes y bares</option>
+                                <option value="52">52. Facturador Electrónico</option>
+                                <option value="53">53. Persona Jurídica No Responsable de IVA</option>
+                                <option value="54">54. Intercambio Automático de Información CRS</option>
+                                <option value="55">55. Informante de Beneficiarios Finales</option>
+                                <option value="56">56. Impuesto Nacional al Carbono</option>
+                                <option value="58">58. Intercambio Automático de Información FATCA</option>
+                                <option value="59">59. Autorretención especial renta</option>
+                                <option value="60">60. Autorretención por concepto de intereses y rendimientos financieros de entidades vigiladas por la Superintendencia Financiera de Colombia</option>
+                                <option value="61">61. Autorretención por concepto de comisiones de entidades vigiladas por la Superintendencia Financiera de Colombia</option>
+                                <option value="62">62. Impuesto nacional sobre productos plásticos un solo uso</option>
+                                <option value="63">63. Impuestos a las bebidas ultraprocesadas azucaradas</option>
+                                <option value="64">64. Impuesto producto comestible ultraprocesado industrial</option>
+                                <option value="65">65. Renta Presencia económica significativa Colombia -PES</option>
+                                        </select>
+                            <button type="button" onclick="addResponsibility()">Agregar &gt;&gt;</button>
+                        </div>
+
+                        <div>
+                            <label for="selected_responsibilities">Responsabilidades seleccionadas:</label>
+                            <select id="selected_responsibilities" multiple>
+                                <!-- Aquí se agregarán dinámicamente -->
+                            </select>
+                            <button type="button" onclick="removeResponsibility()">&lt;&lt; Quitar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dependencia: Cuenta Bancaria -->
+                <div class="sub-section">
+                    <h3>Datos de la Cuenta Bancaria</h3>
+                    <label for="tipo_cuenta">Tipo de Cuenta:</label>
+                    <select id="tipo_cuenta" name="tipo_cuenta" required>
+                        <option value="ahorros">Ahorros</option>
+                        <option value="corriente">Corriente</option>
+                    </select>
+
+                    <label for="numero_cuenta">Número de Cuenta:</label>
+                    <input type="text" id="numero_cuenta" name="numero_cuenta" required>
+
+                    <label for="entidad_bancaria">Entidad Bancaria:</label>
+                    <input type="text" id="entidad_bancaria" name="entidad_bancaria" required>
+                </div>
+
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabla de Proveedores -->
+    <table id="providerTable">
+        <thead>
+            <tr>
+                <th>NIT</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Correo Electrónico</th>
+                <th>Dirección</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Filas dinámicas -->
+        </tbody>
+    </table>
+</body>
+</html>
