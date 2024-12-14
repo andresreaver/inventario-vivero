@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'ViveroAndalucia.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Vivero',
+        'NAME': 'inventario_db',
         'USER': 'postgres',
-        'PASSWORD': 'Edilma5422',
+        'PASSWORD': 'Nate1206',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -130,3 +130,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'gestion.CustomUser'
 
+STATIC_URL = '/static/'
+#STATICFILES_DIRS = [BASE_DIR / "static"]
+
+#LOGIN_REDIRECT_URL = '/'

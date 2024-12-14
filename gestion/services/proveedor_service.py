@@ -1,27 +1,25 @@
-from gestion.models.proveedor import Proveedor
+from gestion.models.proveedor import Proveedor, Responsabilidad
 
-class ProveedorService:
-    @staticmethod
-    def crear_proveedor(nombre, telefono, email, direccion):
-        proveedor = Proveedor(nombre=nombre, telefono=telefono, email=email, direccion=direccion)
-        proveedor.save()
-        return proveedor
+def listar_responsabilidades():
+    return Responsabilidad.objects.all()
 
-    @staticmethod
-    def obtener_proveedores():
-        return Proveedor.objects.all()
+def crear_responsabilidades():
+    # Crear responsabilidades si no existen (solo al inicializar el sistema)
+    responsabilidades = [
+        ("01", "Aporte especial para la administración de justicia"),
+        ("02", "Gravamen a los Movimientos Financieros (GMF)"),
+        # Agregar las demás responsabilidades aquí...
+    ]
+    for codigo, descripcion in responsabilidades:
+        Responsabilidad.objects.get_or_create(codigo=codigo, descripcion=descripcion)
 
-    @staticmethod
-    def actualizar_proveedor(proveedor_id, nombre, telefono, email, direccion):
-        proveedor = Proveedor.objects.get(id=proveedor_id)
-        proveedor.nombre = nombre
-        proveedor.telefono = telefono
-        proveedor.email = email
-        proveedor.direccion = direccion
-        proveedor.save()
-        return proveedor
+def crear_proveedor(datos):
+    proveedor = Proveedor.objects.create(**datos)
+    return proveedor
 
-    @staticmethod
-    def eliminar_proveedor(proveedor_id):
-        proveedor = Proveedor.objects.get(id=proveedor_id)
-        proveedor.delete()
+def actualizar_proveedor(proveedor_id, datos):
+    proveedor = Proveedor.objects.get(id=proveedor_id)
+    for key, value in datos.items():
+        setattr(proveedor, key, value)
+    proveedor.save()
+    return proveedor
