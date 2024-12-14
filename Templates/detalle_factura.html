@@ -1,0 +1,35 @@
+{% extends 'base_dashboard.html' %}
+
+{% block content %}
+<h1>Detalle de Factura</h1>
+<p>Número de Factura: {{ factura.numero_factura }}</p>
+<p>Cliente: {{ factura.cliente.nombre }}</p>
+<p>Fecha: {{ factura.fecha }}</p>
+<p>Forma de Pago: {{ factura.forma_pago }}</p>
+
+<h2>Productos</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for detalle in factura.detalles.all %}
+        <tr>
+            <td>{{ detalle.producto.nombre }}</td>
+            <td>{{ detalle.cantidad }}</td>
+            <td>${{ detalle.precio_unitario }}</td>
+            <td>${{ detalle.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p>Subtotal: ${{ factura.subtotal }}</p>
+<p>IVA: ${{ factura.iva }}</p>
+<p>Total: ${{ factura.total }}</p>
+
+{% endblock %}

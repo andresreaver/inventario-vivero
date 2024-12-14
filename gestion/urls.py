@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from gestion.views.user_views import admin_dashboard, logout_view
 from .views import user_views, producto_views, compra_views, compras, crear_producto, editar_producto, eliminar_producto
+from .views.factura_views import lista_facturas, crear_factura
 from .views.informe_views import informes
 from .views.venta_views import ventas
 
@@ -19,6 +20,9 @@ urlpatterns = [
     path('compras/', compras, name='compras'),
     path('ventas/', ventas, name='ventas'),
     path('informes/', informes, name='informes'),
+    path('facturas/', lista_facturas, name='lista_facturas'),
+    #path('facturas/<int:factura_id>/', detalle_factura_view, name='detalle_factura'),
+    path('facturas/crear/', crear_factura, name='crear_factura'),
 
 
 ]

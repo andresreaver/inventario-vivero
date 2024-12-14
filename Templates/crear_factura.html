@@ -1,0 +1,53 @@
+{% extends 'base_dashboard.html' %}
+
+{% block content %}
+    Facturacion - Vivero Andalucía
+
+<form method="post" action="{% url 'crear_factura' %}">
+    {% csrf_token %}
+    <label for="cliente">Cliente:</label>
+    <select name="cliente_id" required>
+        {% for cliente in clientes %}
+            <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="forma_pago">Forma de Pago:</label>
+    <select name="forma_pago" required>
+        <option value="Efectivo">Efectivo</option>
+        <option value="Tarjeta">Tarjeta</option>
+        <option value="Crédito">Crédito</option>
+    </select>
+
+    <h3>Detalles</h3>
+    <div id="detalles-container">
+        <div class="detalle">
+            <label>Producto:</label>
+            <select name="detalles[0][producto_id]" required>
+                {% for producto in productos %}
+                    <option value="{{ producto.id }}">{{ producto.nombre }} - ${{ producto.precio_venta }}</option>
+                {% endfor %}
+            </select>
+            <label>Cantidad:</label>
+            <input type="number" name="detalles[0][cantidad]" min="1" required>
+        </div>
+    </div>
+    <button type="button" onclick="agregarDetalle()">Agregar Producto</button>
+    <button type="submit">Crear Factura</button>
+</form>
+
+<script>
+    let detalleIndex = 1;
+    function agregarDetalle() {
+        const container = document.getElementById('detalles-container');
+        const newDetalle = container.firstElementChild.cloneNode(true);
+        newDetalle.querySelectorAll('select, input').forEach(input => {
+            const name = input.name.replace(/\d+/, detalleIndex);
+            input.name = name;
+            if (input.tagName === 'INPUT') input.value = '';
+        });
+        container.appendChild(newDetalle);
+        detalleIndex++;
+    }
+</script>
+{% endblock %}
