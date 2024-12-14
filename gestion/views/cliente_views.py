@@ -1,23 +1,37 @@
-from django.shortcuts import render, redirect
-from gestion.services.cliente_service import ClienteService
-from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect, render
+from gestion.models.cliente import Cliente
+from gestion.forms import ClienteForm
 
-def lista_clientes(request):
-    """Vista para listar clientes"""
-    clientes = ClienteService.obtener_clientes()
-    return render(request, 'lista_clientes.html', {'clientes': clientes})
+
+def listar_clientes(request):
+    clientes = Cliente.objects.all()
+    return render(request, 'cliente.html', {'clientes': clientes})
+
+def editar_cliente(request, pk):
+    cliente = get_object_or_404(Cliente, pk=pk)
+    if request.method == 'POST':
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('cliente')  # Alias corregido
+    else:
+        form = ClienteForm(instance=cliente)
+    return render(request, 'cliente.html', {'form': form})
+
 
 def crear_cliente(request):
-    """Vista para crear un nuevo cliente"""
+    from gestion.forms import ClienteForm  # Asegúrate de importar el formulario correctamente
     if request.method == 'POST':
-        nombre = request.POST.get('nombre')
-        telefono = request.POST.get('telefono')
-        email = request.POST.get('email')
-        direccion = request.POST.get('direccion')
-        try:
-            ClienteService.crear_cliente(nombre, telefono, email, direccion)
-            messages.success(request, 'Cliente creado con éxito.')
-        except Exception as e:
-            messages.error(request, f'Error al crear cliente: {str(e)}')
-        return redirect('lista_clientes')
-    return render(request, 'crear_cliente.html')
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cliente')  # Alias corregido
+    else:
+        form = ClienteForm()
+    return render(request, 'cliente.html', {'form': form})
+
+
+def eliminar_cliente(request, pk):
+    cliente = get_object_or_404(Cliente, pk=pk)
+    cliente.delete()
+    return redirect('cliente') 

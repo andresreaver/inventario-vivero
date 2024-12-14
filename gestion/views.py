@@ -98,3 +98,12 @@ def edit_user(request, user_id):
         messages.success(request, f"Usuario {user.username} actualizado con éxito.")
         return redirect('manage_users')
     return render(request, 'edit_user.html', {'user': user})
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from gestion.models import Cliente  # Importa el modelo de clientes
+
+@login_required
+def lista_clientes(request):
+    clientes = Cliente.objects.all()  # Recupera todos los clientes
+    return render(request, "cliente.html", {"clientes": clientes})  # Usa la plantilla existente

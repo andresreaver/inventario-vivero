@@ -34,4 +34,4 @@ def crear_proveedor(request):
 def eliminar_proveedor(request, pk):
     proveedor = get_object_or_404(Proveedor, pk=pk)
     proveedor.delete()
-    return redirect('proveedor')  # Cambia el nombre por el alias de tu URL para listar proveedores
+    return redirect('proveedor')

@@ -3,6 +3,8 @@ from .models import Producto, Proveedor, Compra, Venta
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
+from .models.cliente import Cliente
+
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
@@ -13,7 +15,7 @@ class ProductoAdmin(admin.ModelAdmin):
 @admin.register(Proveedor)
 class ProveedorAdin(admin.ModelAdmin):
     list_display = ('nit_cedula', 'nombre_razon_social', 'telefono', 'correo_electronico', 'direccion')
-    search_fields = ('nombre', )
+    search_fields = ('nombre_razon_social', )
 
 @admin.register(Compra)
 class CompraAdmin(admin.ModelAdmin):
@@ -24,6 +26,11 @@ class CompraAdmin(admin.ModelAdmin):
 class VentaAdmin(admin.ModelAdmin):
     list_display = ('producto', 'cantidad', 'precio_unitario', 'fecha')
     list_filter = ('fecha', )
+
+@admin.register(Cliente)
+class ClienteAdin(admin.ModelAdmin):
+    list_display = ('nit_cedula', 'nombre_razon_social', 'telefono', 'correo_electronico', 'direccion')
+    search_fields = ('nombre_razon_social', )
 
 #Register your Models Here
 
