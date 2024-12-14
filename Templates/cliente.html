@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Clientes</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 20px;">
+    <div style="text-align: center; margin-bottom: 20px;">
+        <h1 style="color: #333;">Gestión de Clientes</h1>
+    </div>
+
+    {% if form %}
+        <!-- Formulario para crear o editar cliente -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h2>Crear o Editar Cliente</h2>
+        </div>
+        <form method="post" style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Guardar
+                </button>
+            </div>
+        </form>
+    {% else %}
+        <!-- Listado de clientes -->
+        <div style="margin-bottom: 20px;">
+            <a href="{% url 'crear_cliente' %}" style="text-decoration: none; padding: 10px 20px; background-color: #007BFF; color: white; border-radius: 5px;">Crear Nuevo Cliente</a>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+            <thead>
+                <tr style="background-color: #333; color: white; text-align: left;">
+                    <th style="padding: 10px; border: 1px solid #ddd;">NIT o Cédula</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Nombre o Razón Social</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Teléfono</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Correo Electrónico</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr style="background-color: {% cycle '#f9f9f9' '#ffffff' %};">
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ cliente.nit_cedula }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ cliente.nombre_razon_social }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ cliente.telefono }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ cliente.correo_electronico }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">
+                        <a href="{% url 'editar_cliente' cliente.id %}" style="text-decoration: none; color: #007BFF;">Editar</a> |
+                        <form action="{% url 'eliminar_cliente' cliente.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background: none; border: none; color: red; cursor: pointer;">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>

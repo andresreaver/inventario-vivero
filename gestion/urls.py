@@ -1,7 +1,5 @@
 from django.urls import path
-from . import views
-from gestion.views.user_views import admin_dashboard, logout_view
-from .models import proveedor
+from gestion.views.user_views import admin_dashboard
 from .views import user_views, producto_views, compra_views, compras
 from .views.informe_views import informes
 from .views.venta_views import ventas
@@ -10,6 +8,12 @@ from gestion.views.proveedor_views import (
     crear_proveedor,
     editar_proveedor,
     eliminar_proveedor,
+)
+from gestion.views.cliente_views import (
+    listar_clientes,
+    crear_cliente,
+    editar_cliente,
+    eliminar_cliente,
 )
 
 urlpatterns = [
@@ -27,7 +31,10 @@ urlpatterns = [
     path('proveedores/nuevo/', crear_proveedor, name='crear_proveedor'),
     path('proveedores/editar/<int:pk>/', editar_proveedor, name='editar_proveedor'),
     path('proveedores/eliminar/<int:pk>/', eliminar_proveedor, name='eliminar_proveedor'),
-
+    path('clientes/', listar_clientes, name='cliente'),
+    path('clientes/nuevo/', crear_cliente, name='crear_cliente'),
+    path('clientes/editar/<int:pk>/', editar_cliente, name='editar_cliente'),
+    path('clientes/eliminar/<int:pk>/', eliminar_cliente, name='eliminar_cliente'),
 ]
 
 
