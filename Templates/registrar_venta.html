@@ -1,0 +1,33 @@
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Registrar Venta{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Registrar Venta</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="cliente">Cliente</label>
+            <select id="cliente" name="cliente" class="form-select" required>
+                {% for cliente in clientes %}
+                <option value="{{ cliente.id }}">{{ cliente.nombre }} - {{ cliente.cedula }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="producto">Producto</label>
+            <select id="producto" name="producto" class="form-select" required>
+                {% for producto in productos %}
+                <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="cantidad">Cantidad</label>
+            <input type="number" id="cantidad" name="cantidad" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success">Registrar Venta</button>
+    </form>
+</div>
+{% endblock %}

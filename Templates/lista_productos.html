@@ -27,13 +27,18 @@
                 <td>{{ producto.stock_minimo }}</td>
                 <td>{{ producto.fecha_caducidad }}</td>
                 <td>
-                    <a href="{% url 'editar_producto' producto.id %}" class="btn btn-sm btn-primary">Editar</a>
-                    <a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-sm btn-danger">Eliminar</a>
+               {% if user.is_superuser %}
+                <a href="{% url 'editar_producto' producto.id %}" class="btn btn-sm btn-primary">Editar</a>
+                <a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-sm btn-danger">Eliminar</a>
+                {% endif %}
+
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'crear_producto' %}" class="btn btn-success mt-3">Agregar Producto</a>
+        {% if user.is_superuser %}
+        <a href="{% url 'crear_producto' %}" class="btn btn-success mt-3">Agregar Producto</a>
+        {% endif %}
 </div>
 {% endblock %}

@@ -2,8 +2,10 @@ from django.urls import path
 from . import views
 from gestion.views.user_views import admin_dashboard, logout_view
 from .views import user_views, producto_views, compra_views, compras, crear_producto, editar_producto, eliminar_producto
+from .views.cliente_views import lista_clientes, crear_cliente
 from .views.informe_views import informes
-from .views.venta_views import ventas
+from .views.proveedor_views import listar_proveedores, crear_proveedor, editar_proveedor, eliminar_proveedor
+from .views.venta_views import ventas,  lista_ventas, registrar_venta
 
 urlpatterns = [
     path('login/', user_views.login_view, name='login'),
@@ -19,6 +21,21 @@ urlpatterns = [
     path('compras/', compras, name='compras'),
     path('ventas/', ventas, name='ventas'),
     path('informes/', informes, name='informes'),
+
+# Clientes
+    path('clientes/', lista_clientes, name='lista_clientes'),
+    path('clientes/crear/', crear_cliente, name='crear_cliente'),
+
+    # Ventas
+    path('ventas/', ventas, name='ventas'),
+    path('ventas/', lista_ventas, name='lista_ventas'),
+    path('ventas/registrar/', registrar_venta, name='registrar_venta'),
+
+    # Proveedores
+    path('proveedores/', listar_proveedores, name='proveedor'),
+    path('proveedores/nuevo/', crear_proveedor, name='crear_proveedor'),
+    path('proveedores/editar/<int:pk>/', editar_proveedor, name='editar_proveedor'),
+    path('proveedores/eliminar/<int:pk>/', eliminar_proveedor, name='eliminar_proveedor'),
 
 
 ]

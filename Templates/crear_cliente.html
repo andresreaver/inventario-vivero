@@ -1,0 +1,29 @@
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Crear Cliente{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Crear Cliente</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="cedula">Cédula</label>
+            <input type="text" id="cedula" name="cedula" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="direccion">Dirección</label>
+            <input type="text" id="direccion" name="direccion" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="telefono">Teléfono</label>
+            <input type="text" id="telefono" name="telefono" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Guardar Cliente</button>
+    </form>
+</div>
+{% endblock %}

@@ -12,8 +12,8 @@ class ProductoAdmin(admin.ModelAdmin):
 
 @admin.register(Proveedor)
 class ProveedorAdin(admin.ModelAdmin):
-    list_display = ('nombre', 'telefono', 'email')
-    search_fields = ('nombre', )
+    list_display = ('nit_cedula', 'nombre_razon_social', 'telefono', 'correo_electronico', 'direccion')
+    search_fields = ('nombre',)
 
 @admin.register(Compra)
 class CompraAdmin(admin.ModelAdmin):
