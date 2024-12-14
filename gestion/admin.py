@@ -1,8 +1,14 @@
 from django.contrib import admin
-from .models import Producto, Proveedor, Compra, Venta
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
+
+from gestion.compra.compra import Compra
+from gestion.producto.producto import Producto
+from gestion.proveedor.proveedor import Proveedor
+from gestion.user.user import CustomUser
+from gestion.venta.venta import Venta
+
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
