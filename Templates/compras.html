@@ -1,9 +1,73 @@
 {% extends 'base_dashboard.html' %}
 
-{% block title %}Compras - Vivero Andalucía{% endblock %}
+{% block title %}Editar Producto - Vivero Andalucía{% endblock %}
 
 {% block content %}
-<h1 class="text-center">Gestión de Compras</h1>
-<p>Desde aquí puedes gestionar las compras realizadas a los proveedores.</p>
-<!-- Contenido dinámico -->
+<body>
+    <h1>Compras</h1>
+
+    <!-- Formulario para Registrar Compra -->
+    <section>
+        <h2>Registrar Compra</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="proveedor">Proveedor:</label>
+            <select name="proveedor" id="proveedor" required>
+                {% for proveedor in proveedores %}
+                    <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+
+            <label for="producto">Producto:</label>
+            <select name="producto" id="producto" required>
+                {% for producto in productos %}
+                    <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" name="cantidad" id="cantidad" min="1" required>
+            <br><br>
+
+            <label for="precio_unitario">Precio Unitario:</label>
+            <input type="number" name="precio_unitario" id="precio_unitario" step="0.01" min="0" required>
+            <br><br>
+
+            <button type="submit">Registrar Compra</button>
+        </form>
+    </section>
+
+    <hr>
+
+    <!-- Listado de Compras -->
+    <section>
+        <h2>Listado de Compras</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Proveedor</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for compra in compras %}
+                <tr>
+                    <td>{{ compra.proveedor.nombre }}</td>
+                    <td>{{ compra.producto.nombre }}</td>
+                    <td>{{ compra.cantidad }}</td>
+                    <td>{{ compra.precio_unitario }}</td>
+                    <td>{{ compra.cantidad|floatformat:2|add:"x"|add:compra.precio_unitario }}</td>
+                    <td>{{ compra.fecha }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</body>
 {% endblock %}
