@@ -38,7 +38,8 @@ class Proveedor(models.Model):
         return self.nombre_razon_social
 
 
-class Responsabilidad(models.Model):
+# En gestion/models/proveedor.py
+class ResponsabilidadProveedor(models.Model):  # Cambiar el nombre aquí
     codigo = models.CharField(max_length=3, unique=True)
     descripcion = models.TextField()
 

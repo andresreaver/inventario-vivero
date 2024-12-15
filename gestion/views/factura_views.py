@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from gestion.services.factura_service import FacturaService
 from gestion.services.cliente_service import ClienteService
 from gestion.services.producto_service import ProductoService
@@ -42,4 +42,3 @@ def crear_factura(request):
     clientes = ClienteService.obtener_clientes()
     productos = ProductoService.obtener_productos()
     return render(request, 'crear_factura.html', {'clientes': clientes, 'productos': productos})
-

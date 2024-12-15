@@ -1,26 +1,37 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from gestion.services.cliente_service import ClienteService
-from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect, render
+from gestion.models.cliente import Cliente
+from gestion.forms import ClienteForm
 
-@login_required
-def lista_clientes(request):
-    clientes = ClienteService.obtener_clientes()
-    return render(request, 'clientes/lista_clientes.html', {'clientes': clientes})
 
-@login_required
-def crear_cliente(request):
+def listar_clientes(request):
+    clientes = Cliente.objects.all()
+    return render(request, 'crear_cliente.html', {'clientes': clientes})
+
+def editar_cliente(request, pk):
+    cliente = get_object_or_404(Cliente, pk=pk)
     if request.method == 'POST':
-        nombre = request.POST['nombre']
-        cedula = request.POST['cedula']
-        direccion = request.POST.get('direccion')
-        telefono = request.POST.get('telefono')
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('cliente')  # Alias corregido
+    else:
+        form = ClienteForm(instance=cliente)
+    return render(request, 'crear_cliente.html', {'form': form})
 
-        try:
-            ClienteService.crear_cliente(nombre, cedula, direccion, telefono)
-            messages.success(request, f"Cliente {nombre} creado con éxito.")
-            return redirect('lista_clientes')
-        except Exception as e:
-            messages.error(request, f"Error al crear cliente: {str(e)}")
 
-    return render(request, 'clientes/crear_cliente.html')
+def crear_cliente(request):
+    from gestion.forms import ClienteForm  # Asegúrate de importar el formulario correctamente
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cliente')  # Alias corregido
+    else:
+        form = ClienteForm()
+    return render(request, 'crear_cliente.html', {'form': form})
+
+
+def eliminar_cliente(request, pk):
+    cliente = get_object_or_404(Cliente, pk=pk)
+    cliente.delete()
+    return redirect('cliente')

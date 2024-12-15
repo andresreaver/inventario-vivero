@@ -60,8 +60,9 @@
         <a href="{% url 'lista_productos' %}">Productos</a>
         <a href="{% url 'compras' %}">Compras</a>
         <a href="{% url 'lista_ventas' %}">Ventas</a>
+        <a href="{% url 'lista_facturas' %}">Facturas</a>
         <a href="{% url 'proveedor' %}">Proveedores</a>
-        <a href="{% url 'lista_clientes' %}">Clientes</a>
+        <a href="{% url 'crear_cliente' %}">Clientes</a>
         <a href="{% url 'informes' %}">Informes</a>
         {% if user.is_superuser %}
         <a href="{% url 'admin_dashboard' %}">Admin Panel</a>

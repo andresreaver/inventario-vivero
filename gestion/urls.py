@@ -2,10 +2,11 @@ from django.urls import path
 from . import views
 from gestion.views.user_views import admin_dashboard, logout_view
 from .views import user_views, producto_views, compra_views, compras, crear_producto, editar_producto, eliminar_producto
-from .views.cliente_views import lista_clientes, crear_cliente
+from .views.cliente_views import crear_cliente, listar_clientes, editar_cliente, eliminar_cliente
+from .views.factura_views import lista_facturas, crear_factura
 from .views.informe_views import informes
 from .views.proveedor_views import listar_proveedores, crear_proveedor, editar_proveedor, eliminar_proveedor
-from .views.venta_views import ventas,  lista_ventas, registrar_venta
+from .views.venta_views import ventas, lista_ventas, registrar_venta
 
 urlpatterns = [
     path('login/', user_views.login_view, name='login'),
@@ -22,9 +23,11 @@ urlpatterns = [
     path('ventas/', ventas, name='ventas'),
     path('informes/', informes, name='informes'),
 
-# Clientes
-    path('clientes/', lista_clientes, name='lista_clientes'),
-    path('clientes/crear/', crear_cliente, name='crear_cliente'),
+    # Clientes
+    #path('clientes/', listar_clientes, name='cliente'),
+    path('clientes/nuevo/', crear_cliente, name='crear_cliente'),
+    path('clientes/editar/<int:pk>/', editar_cliente, name='editar_cliente'),
+    path('clientes/eliminar/<int:pk>/', eliminar_cliente, name='eliminar_cliente'),
 
     # Ventas
     path('ventas/', ventas, name='ventas'),
@@ -37,5 +40,9 @@ urlpatterns = [
     path('proveedores/editar/<int:pk>/', editar_proveedor, name='editar_proveedor'),
     path('proveedores/eliminar/<int:pk>/', eliminar_proveedor, name='eliminar_proveedor'),
 
+    # facturas
+    path('facturas/', lista_facturas, name='lista_facturas'),
+    # path('facturas/<int:factura_id>/', detalle_factura_view, name='detalle_factura'),
+    path('facturas/crear/', crear_factura, name='crear_factura'),
 
 ]
