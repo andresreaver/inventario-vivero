@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from gestion.views.user_views import admin_dashboard, logout_view
 from .views import user_views, producto_views, compra_views, compras, crear_producto, editar_producto, eliminar_producto
+from .views.reports_views import informe_ventas, informe_ventas_pdf
 from .views.cliente_views import crear_cliente, listar_clientes, editar_cliente, eliminar_cliente
 from .views.factura_views import lista_facturas, crear_factura
 from .views.informe_views import informes
@@ -44,5 +45,8 @@ urlpatterns = [
     path('facturas/', lista_facturas, name='lista_facturas'),
     # path('facturas/<int:factura_id>/', detalle_factura_view, name='detalle_factura'),
     path('facturas/crear/', crear_factura, name='crear_factura'),
+
+    path('informe-ventas/', informe_ventas, name='informe_ventas'),
+    path('informe-ventas/pdf/', informe_ventas_pdf, name='informe_ventas_pdf'),
 
 ]
