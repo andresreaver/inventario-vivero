@@ -1,0 +1,24 @@
+from gestion.models.venta import Venta
+from gestion.models.producto import Producto
+
+class VentaService:
+    @staticmethod
+    def registrar_venta(cliente, producto, cantidad):
+        """Registra una nueva venta."""
+        if producto.stock < cantidad:
+            raise ValueError(f"Stock insuficiente para el producto {producto.nombre}")
+        producto.stock -= cantidad
+        producto.save()
+
+        precio_total = producto.stock * cantidad
+        return Venta.objects.create(
+            cliente=cliente,
+            producto=producto,
+            cantidad=cantidad,
+            precio_total=precio_total
+        )
+
+    @staticmethod
+    def obtener_ventas():
+        """Obtiene todas las ventas registradas."""
+        return Venta.objects.all()

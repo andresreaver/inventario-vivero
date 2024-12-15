@@ -1,0 +1,59 @@
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Panel de Administrador - Gestión de Proveedores{% endblock %}
+
+{% block content %}
+<div class="card mt-4">
+    <div class="card-header bg-success text-white text-center">
+        <h1>Gestión de Proveedores</h1>
+    </div>
+    <div class="card-body">
+        {% if form %}
+            <!-- Formulario para crear o editar proveedor -->
+            <div class="text-center mb-4">
+                <h5>Crear o Editar Proveedor</h5>
+            </div>
+            <form method="post" class="p-4 border rounded bg-light">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        {% else %}
+            <!-- Listado de proveedores -->
+            <div class="mb-3">
+                <a href="{% url 'crear_proveedor' %}" class="btn btn-success"><b>Crear Nuevo Proveedor</b></a>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead class="table-success">
+                    <tr>
+                        <th>NIT o Cédula</th>
+                        <th>Nombre o Razón Social</th>
+                        <th>Teléfono</th>
+                        <th>Correo Electrónico</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proveedor in proveedores %}
+                        <tr>
+                            <td>{{ proveedor.nit_cedula }}</td>
+                            <td>{{ proveedor.nombre_razon_social }}</td>
+                            <td>{{ proveedor.telefono }}</td>
+                            <td>{{ proveedor.correo_electronico }}</td>
+                            <td>
+                                <a href="{% url 'editar_proveedor' proveedor.id %}" class="btn btn-sm btn-primary">Editar</a>
+                                <form action="{% url 'eliminar_proveedor' proveedor.id %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

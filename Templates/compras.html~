@@ -1,0 +1,32 @@
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Compras{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Compras</h1>
+    <p>Gestión de todas las compras realizadas en el vivero.</p>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Proveedor</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for compra in compras %}
+        <tr>
+            <td>{{ compra.proveedor.nombre }}</td>
+            <td>{{ compra.producto.nombre }}</td>
+            <td>{{ compra.cantidad }}</td>
+            <td>{{ compra.precio_unitario }}</td>
+            <td>{{ compra.fecha }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

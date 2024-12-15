@@ -1,0 +1,30 @@
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Ventas{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Ventas</h1>
+    <p>Registro de todas las ventas realizadas.</p>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for venta in ventas %}
+        <tr>
+            <td>{{ venta.producto.nombre }}</td>
+            <td>{{ venta.cantidad }}</td>
+            <td>{{ venta.precio_unitario }}</td>
+            <td>{{ venta.fecha }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,38 @@
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
+from gestion.services.report_services import (
+    obtener_inventario,
+    obtener_ventas,
+    obtener_compras,
+    productos_proximos_a_vencer,
+)
+
+def generar_pdf(template_name, context, filename):
+    html_string = render_to_string(template_name, context)
+    html = HTML(string=html_string)
+    pdf_file = html.write_pdf()
+
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename={filename}'
+    return response
+
+def informe_ventas(request):
+    ventas, total_ventas = obtener_ventas()
+    context = {'ventas': ventas, 'total_ventas': total_ventas}
+    return generar_pdf('reports/ventas.html', context, 'informe_ventas.pdf')
+
+def informe_compras(request):
+    compras, total_compras = obtener_compras()
+    context = {'compras': compras, 'total_compras': total_compras}
+    return generar_pdf('reports/compras.html', context, 'informe_compras.pdf')
+
+def informe_inventario(request):
+    productos, productos_bajo_stock = obtener_inventario()
+    context = {'productos': productos, 'productos_bajo_stock': productos_bajo_stock}
+    return generar_pdf('reports/inventario.html', context, 'informe_inventario.pdf')
+
+def informe_productos_proximos_a_vencer(request):
+    proximos_a_vencer = productos_proximos_a_vencer()
+    context = {'proximos_a_vencer': proximos_a_vencer}
+    return generar_pdf('reports/proximos_a_vencer.html', context, 'informe_proximos_a_vencer.pdf')
