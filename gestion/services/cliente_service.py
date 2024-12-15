@@ -27,3 +27,10 @@ class ClienteService:
             setattr(cliente, key, value)
         cliente.save()
         return cliente
+
+    @staticmethod
+    def obtener_clientes():
+        """
+        Retorna todos los clientes registrados.
+        """
+        return Cliente.objects.all()
