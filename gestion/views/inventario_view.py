@@ -3,11 +3,11 @@ from gestion.services.inventario_service import obtener_productos, obtener_histo
 
 def inventario_actual(request):
     productos = obtener_productos()
-    return render(request, 'gestion/inventario_actual.html', {'productos': productos})
+    return render(request, 'inventario_actual.html', {'productos': productos})
 
 def historial_movimientos(request):
     movimientos = obtener_historial_movimientos()
-    return render(request, 'gestion/historial_movimientos.html', {'movimientos': movimientos})
+    return render(request, 'historial_movimientos.html', {'movimientos': movimientos})
 
 def descargar_informe(request):
     csv_data = descargar_informe_csv()

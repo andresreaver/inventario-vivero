@@ -10,6 +10,7 @@ from .views.proveedor_views import listar_proveedores, crear_proveedor, editar_p
 from .views.venta_views import ventas, lista_ventas, registrar_venta
 
 urlpatterns = [
+    #Login
     path('login/', user_views.login_view, name='login'),
     path('logout/', user_views.logout_view, name='logout'),
     path('admin-dashboard/', admin_dashboard, name='admin_dashboard'),
@@ -21,12 +22,12 @@ urlpatterns = [
     path('password-reset/', user_views.password_reset_request, name='password_reset_request'),
     path('reset-password/<uidb64>/<token>/', user_views.password_reset, name='password_reset'),
     path('compras/', compras, name='compras'),
-    path('ventas/', ventas, name='ventas'),
+    #path('ventas/', ventas, name='ventas'),
     path('informes/', informes, name='informes'),
 
     # Clientes
-    #path('clientes/', listar_clientes, name='cliente'),
-    path('clientes/nuevo/', crear_cliente, name='crear_cliente'),
+    path('clientes/', listar_clientes, name='listar_clientes'),
+    path('clientes/crear/', crear_cliente, name='crear_cliente'),
     path('clientes/editar/<int:pk>/', editar_cliente, name='editar_cliente'),
     path('clientes/eliminar/<int:pk>/', eliminar_cliente, name='eliminar_cliente'),
 
