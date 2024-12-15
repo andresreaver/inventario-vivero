@@ -21,6 +21,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path('', lambda request: redirect('login'), name= 'root'),
     path('', include('gestion.urls')),
 ]

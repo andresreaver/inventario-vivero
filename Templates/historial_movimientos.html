@@ -1,0 +1,25 @@
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Editar Producto - Vivero Andalucía{% endblock %}
+
+{% block content %}
+
+<h1>Historial de Movimientos</h1>
+<table>
+    <thead>
+        <tr><th>Producto</th><th>Tipo</th><th>Cantidad</th><th>Fecha</th><th>Cliente</th><th>Tipo Pago</th></tr>
+    </thead>
+    <tbody>
+        {% for movimiento in movimientos %}
+        <tr>
+            <td>{{ movimiento.producto.nombre }}</td>
+            <td>{{ movimiento.get_tipo_movimiento_display }}</td>
+            <td>{{ movimiento.cantidad }}</td>
+            <td>{{ movimiento.fecha }}</td>
+            <td>{{ movimiento.cliente.username }}</td>
+            <td>{{ movimiento.tipo_pago }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -64,6 +64,7 @@
         <a href="{% url 'proveedor' %}">Proveedores</a>
         <a href="{% url 'crear_cliente' %}">Clientes</a>
         <a href="{% url 'informes' %}">Informes</a>
+        <a href="{% url 'inventario_actual' %}">Inventario</a>
         {% if user.is_superuser %}
         <a href="{% url 'admin_dashboard' %}">Admin Panel</a>
         {% endif %}

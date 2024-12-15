@@ -5,6 +5,7 @@ from .views import user_views, producto_views, compra_views, compras, crear_prod
 from .views.cliente_views import crear_cliente, listar_clientes, editar_cliente, eliminar_cliente
 from .views.factura_views import lista_facturas, crear_factura
 from .views.informe_views import informes
+from .views.inventario_view import descargar_informe, inventario_actual, historial_movimientos
 from .views.proveedor_views import listar_proveedores, crear_proveedor, editar_proveedor, eliminar_proveedor
 from .views.venta_views import ventas, lista_ventas, registrar_venta
 
@@ -45,4 +46,8 @@ urlpatterns = [
     # path('facturas/<int:factura_id>/', detalle_factura_view, name='detalle_factura'),
     path('facturas/crear/', crear_factura, name='crear_factura'),
 
+    #Inventarios
+    path('inventario/', inventario_actual, name='inventario_actual'),
+    path('historial/', historial_movimientos, name='historial_movimientos'),
+    path('descargar-informe/', descargar_informe, name='descargar_informe'),
 ]

@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'ViveroAndalucia.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Vivero',
+        'NAME': 'inventario_db',
         'USER': 'postgres',
-        'PASSWORD': 'Edilma5422',
+        'PASSWORD': 'Admin123',
         'HOST': 'localhost',
         'PORT': '5432'
     }
