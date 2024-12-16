@@ -71,7 +71,7 @@
                         <td>{{ compra.producto.nombre }}</td>
                         <td>{{ compra.cantidad }}</td>
                         <td>${{ compra.precio_unitario }}</td>
-                        <td>${{ compra.cantidad|floatformat:0|add:"0.0" * compra.precio_unitario }}</td>
+                        <td>${{ compra.cantidad|floatformat:0|add:"0.0"}} * compra.precio_unitario }}</td>
                         <td>{{ compra.fecha }}</td>
                     </tr>
                     {% empty %}
