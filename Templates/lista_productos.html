@@ -1,44 +1,36 @@
 {% extends 'base_dashboard.html' %}
 
-{% block title %}Lista de Productos - Vivero Andalucía{% endblock %}
-
 {% block content %}
-<div class="container mt-4">
-    <h1 class="text-center">Lista de Productos</h1>
-    <table class="table table-striped table-bordered">
-        <thead class="table-success">
-            <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Stock</th>
-                <th>Stock Mínimo</th>
-                <th>Fecha de Caducidad</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for producto in productos %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ producto.nombre }}</td>
-                <td>{{ producto.tipo }}</td>
-                <td>{{ producto.stock }}</td>
-                <td>{{ producto.stock_minimo }}</td>
-                <td>{{ producto.fecha_caducidad }}</td>
-                <td>
-               {% if user.is_superuser %}
-                <a href="{% url 'editar_producto' producto.id %}" class="btn btn-sm btn-primary">Editar</a>
-                <a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-sm btn-danger">Eliminar</a>
-                {% endif %}
+<h2>Lista de Productos</h2>
+<a href="{% url 'crear_producto' %}" class="btn btn-success mb-3">Crear Producto</a>
 
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-        {% if user.is_superuser %}
-        <a href="{% url 'crear_producto' %}" class="btn btn-success mt-3">Agregar Producto</a>
-        {% endif %}
-</div>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Stock</th>
+            <th>Precio Venta</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in productos %}
+        <tr>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.tipo }}</td>
+            <td>{{ producto.stock }}</td>
+            <td>${{ producto.precio_venta }}</td>
+            <td>
+                <a href="{% url 'editar_producto' producto.id %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center">No hay productos disponibles.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

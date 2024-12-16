@@ -1,13 +1,15 @@
 from django.urls import path
 from . import views
 from gestion.views.user_views import admin_dashboard, logout_view
-from .views import user_views, producto_views, compra_views, compras, crear_producto, editar_producto, eliminar_producto
+from .views import user_views, producto_views, compra_views, crear_producto, editar_producto, eliminar_producto, \
+    lista_compras, compras
 from .views.cliente_views import crear_cliente, listar_clientes, editar_cliente, eliminar_cliente
 from .views.factura_views import lista_facturas, crear_factura
 from .views.informe_views import informes
 from .views.inventario_view import descargar_informe, inventario_actual, historial_movimientos
 from .views.proveedor_views import listar_proveedores, crear_proveedor, editar_proveedor, eliminar_proveedor
 from .views.venta_views import ventas, lista_ventas, registrar_venta
+
 
 urlpatterns = [
     #Login
@@ -18,10 +20,9 @@ urlpatterns = [
     path('productos/crear/', crear_producto, name='crear_producto'),
     path('productos/editar/<int:producto_id>/', editar_producto, name='editar_producto'),
     path('productos/eliminar/<int:producto_id>/', eliminar_producto, name='eliminar_producto'),
-    path('compras/', compra_views.lista_compras, name='lista_compras'),
+    path('compras/', compras, name='compras'),
     path('password-reset/', user_views.password_reset_request, name='password_reset_request'),
     path('reset-password/<uidb64>/<token>/', user_views.password_reset, name='password_reset'),
-    path('compras/', compras, name='compras'),
     #path('ventas/', ventas, name='ventas'),
     path('informes/', informes, name='informes'),
 
