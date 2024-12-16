@@ -1,29 +1,54 @@
 {% extends 'base_dashboard.html' %}
 
-{% block title %}Crear Cliente{% endblock %}
+{% block title %}Gestión de Clientes - Vivero Andalucía{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1>Crear Cliente</h1>
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" name="nombre" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="cedula">Cédula</label>
-            <input type="text" id="cedula" name="cedula" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="direccion">Dirección</label>
-            <input type="text" id="direccion" name="direccion" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="telefono">Teléfono</label>
-            <input type="text" id="telefono" name="telefono" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-success">Guardar Cliente</button>
-    </form>
+<div class="content">
+    <h1 class="title">Gestión de Clientes</h1>
+
+    {% if form %}
+    <!-- Formulario para crear o editar cliente -->
+    <div class="form-container">
+        <h2>Crear o Editar Cliente</h2>
+        <form method="post" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+    </div>
+    {% else %}
+    <!-- Listado de clientes -->
+    <div class="action-bar">
+        <a href="{% url 'crear_cliente' %}" class="btn btn-primary">Crear Nuevo Cliente</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>NIT o Cédula</th>
+                <th>Nombre o Razón Social</th>
+                <th>Teléfono</th>
+                <th>Correo Electrónico</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr class="{% cycle 'row-light' 'row-dark' %}">
+                <td>{{ cliente.nit_cedula }}</td>
+                <td>{{ cliente.nombre_razon_social }}</td>
+                <td>{{ cliente.telefono }}</td>
+                <td>{{ cliente.correo_electronico }}</td>
+                <td>
+                    <a href="{% url 'editar_cliente' cliente.id %}" class="link">Editar</a> |
+                    <form action="{% url 'eliminar_cliente' cliente.id %}" method="post" class="form-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-link danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
 </div>
 {% endblock %}

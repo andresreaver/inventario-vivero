@@ -10,8 +10,14 @@ class Compra(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
 
+    def total(self):
+        return self.cantidad * self.precio_unitario
+
     def __str__(self):
         return f"{self.proveedor.nombre_razon_social} - {self.producto.nombre} ({self.cantidad})"
 
+<<<<<<< HEAD
     def total(self):
         return self.cantidad * self.precio_unitario
+=======
+>>>>>>> origin/AndresReaver02

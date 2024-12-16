@@ -1,0 +1,65 @@
+{% extends 'base_dashboard.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Facturación - Vivero Andalucía</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="card mt-4">
+            <div class="card-header bg-success text-white">
+                <h5>Información del Cliente</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="cliente" class="form-label">Cliente</label>
+                        <select name="cliente" id="cliente" class="form-select" required>
+                            <option value="" disabled selected>Seleccione un cliente</option>
+                            <!-- Opciones de clientes dinámicas -->
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="forma_pago" class="form-label">Forma de Pago</label>
+                        <select name="forma_pago" id="forma_pago" class="form-select" required>
+                            <option value="efectivo">Efectivo</option>
+                            <option value="tarjeta">Tarjeta</option>
+                            <option value="transferencia">Transferencia</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header bg-success text-white">
+                <h5>Detalles</h5>
+            </div>
+            <div class="card-body">
+                <div id="detalle-productos">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="producto_1" class="form-label">Producto</label>
+                            <select name="producto" id="producto_1" class="form-select" required>
+                                <option value="" disabled selected>Seleccione un producto</option>
+                                <!-- Opciones dinámicas de productos -->
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="cantidad_1" class="form-label">Cantidad</label>
+                            <input type="number" name="cantidad" id="cantidad_1" class="form-control" placeholder="Ingrese la cantidad" required>
+                        </div>
+                    </div>
+                    <!-- Puedes duplicar este bloque con JS para agregar más productos -->
+                </div>
+                <div class="text-center mt-3">
+                    <button type="button" class="btn btn-outline-secondary">Agregar Producto</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success">Crear Factura</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

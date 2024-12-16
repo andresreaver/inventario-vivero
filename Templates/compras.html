@@ -1,5 +1,6 @@
 {% extends 'base_dashboard.html' %}
 
+<<<<<<< HEAD
 {% block title %}Editar Producto - Vivero Andalucía{% endblock %}
 
 {% block content %}
@@ -70,4 +71,90 @@
         </table>
     </section>
 </body>
+=======
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Gestión de Compras</h2>
+
+    <!-- Formulario para Registrar Compras -->
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">Registrar Compra</div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="proveedor" class="form-label">Proveedor</label>
+                        <select name="proveedor" id="proveedor" class="form-select" required>
+                            <option value="" disabled selected>Seleccione un proveedor</option>
+                            {% for proveedor in proveedores %}
+                            <option value="{{ proveedor.id }}">{{ proveedor.nombre_razon_social }}</option>
+                            {% empty %}
+                            <option disabled>No hay proveedores disponibles</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="producto" class="form-label">Producto</label>
+                        <select name="producto" id="producto" class="form-select" required>
+                            <option value="" disabled selected>Seleccione un producto</option>
+                            {% for producto in productos %}
+                            <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                            {% empty %}
+                            <option disabled>No hay productos disponibles</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="cantidad" class="form-label">Cantidad</label>
+                        <input type="number" name="cantidad" id="cantidad" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="precio_unitario" class="form-label">Precio Unitario</label>
+                        <input type="number" step="0.01" name="precio_unitario" id="precio_unitario" class="form-control" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Registrar Compra</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Listado de Compras -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">Listado de Compras</div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Proveedor</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Total</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for compra in compras %}
+                    <tr>
+                        <td>{{ compra.proveedor.nombre_razon_social }}</td>
+                        <td>{{ compra.producto.nombre }}</td>
+                        <td>{{ compra.cantidad }}</td>
+                        <td>${{ compra.precio_unitario }}</td>
+                        <td>${{ compra.cantidad|floatformat:0|add:"0.0" * compra.precio_unitario }}</td>
+                        <td>{{ compra.fecha }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No hay compras registradas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+>>>>>>> origin/AndresReaver02
 {% endblock %}

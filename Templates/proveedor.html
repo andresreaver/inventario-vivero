@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="card mt-4">
-    <div class="card-header bg-primary text-white">
-        Gestión de Proveedores
+    <div class="text-center">
+        <h1>Gestión de Proveedores</h1>
     </div>
     <div class="card-body">
         {% if form %}
@@ -23,10 +23,10 @@
         {% else %}
             <!-- Listado de proveedores -->
             <div class="mb-3">
-                <a href="{% url 'crear_proveedor' %}" class="btn btn-success">Crear Nuevo Proveedor</a>
+                <a href="{% url 'crear_proveedor' %}" class="btn btn-success"><b>Crear Nuevo Proveedor</b></a>
             </div>
             <table class="table table-striped table-hover">
-                <thead class="table-dark">
+                <thead class="table-success">
                     <tr>
                         <th>NIT o Cédula</th>
                         <th>Nombre o Razón Social</th>

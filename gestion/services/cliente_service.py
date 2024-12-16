@@ -1,31 +1,36 @@
-from gestion.models.cliente import Cliente
+from gestion.models.cliente import Cliente, Responsabilidad
 
 class ClienteService:
     @staticmethod
-    def crear_cliente(nombre, cedula, direccion=None, telefono=None):
-        """Crea un cliente nuevo."""
-        return Cliente.objects.create(
-            nombre=nombre,
-            cedula=cedula,
-            direccion=direccion,
-            telefono=telefono
-        )
+    def listar_responsabilidades():
+        return Responsabilidad.objects.all()
 
     @staticmethod
-    def obtener_cliente_por_id(cliente_id):
-        """Obtiene un cliente por su ID."""
-        return Cliente.objects.get(id=cliente_id)
+    def crear_responsabilidades():
+        responsabilidades = [
+            ("01", "Aporte especial para la administración de justicia"),
+            ("02", "Gravamen a los Movimientos Financieros (GMF)"),
+            # Agregar las demás responsabilidades aquí...
+        ]
+        for codigo, descripcion in responsabilidades:
+            Responsabilidad.objects.get_or_create(codigo=codigo, descripcion=descripcion)
 
     @staticmethod
-    def obtener_clientes():
-        """Devuelve una lista de todos los clientes."""
-        return Cliente.objects.all()
+    def crear_cliente(datos):
+        cliente = Cliente.objects.create(**datos)
+        return cliente
 
     @staticmethod
-    def actualizar_cliente(cliente_id, **datos):
-        """Actualiza un cliente existente."""
+    def actualizar_cliente(cliente_id, datos):
         cliente = Cliente.objects.get(id=cliente_id)
         for key, value in datos.items():
             setattr(cliente, key, value)
         cliente.save()
         return cliente
+
+    @staticmethod
+    def obtener_clientes():
+        """
+        Retorna todos los clientes registrados.
+        """
+        return Cliente.objects.all()

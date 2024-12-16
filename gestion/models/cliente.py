@@ -2,6 +2,10 @@
 from django.db import models
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/AndresReaver02
 class Cliente(models.Model):
     TIPOS_DOCUMENTO = [
         ('31', 'NIT'),
@@ -30,9 +34,17 @@ class Cliente(models.Model):
         return self.nombre_razon_social
 
 
+<<<<<<< HEAD
 class Responsabilidad_cliente(models.Model):
+=======
+class Responsabilidad(models.Model):  # Cambiar el nombre del modelo
+>>>>>>> origin/AndresReaver02
     codigo = models.CharField(max_length=3, unique=True)
     descripcion = models.TextField()
 
     def __str__(self):
+<<<<<<< HEAD
         return f"{self.codigo}. {self.descripcion}"
+=======
+        return f"{self.codigo}. {self.descripcion}"
+>>>>>>> origin/AndresReaver02

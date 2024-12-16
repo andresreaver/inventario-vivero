@@ -1,0 +1,48 @@
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Gestión de Facturas - Vivero Andalucía{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Gestión de Facturas</h1>
+
+    <!-- Botón para crear nueva factura -->
+    <div class="text-end mb-3">
+        <a href="{% url 'crear_factura' %}" class="btn btn-primary">Crear Nueva Factura</a>
+    </div>
+
+    <!-- Tabla de facturas -->
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Número</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for factura in facturas %}
+            <tr>
+                <td>{{ factura.numero_factura }}</td>
+                <td>{{ factura.cliente.nombre }}</td>
+                <td>{{ factura.fecha }}</td>
+                <td>${{ factura.total }}</td>
+                <td>
+                    <a href="{% url 'detalle_factura' factura.numero_factura %}" class="btn btn-info btn-sm">Ver Detalle</a>
+                    <form action="{% url 'eliminar_factura' factura.numero_factura %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No hay facturas registradas.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

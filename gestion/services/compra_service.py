@@ -57,4 +57,8 @@ class CompraService:
 
         :return: QuerySet con todas las compras.
         """
+<<<<<<< HEAD
         return Compra.objects.select_related('proveedor', 'producto').all()
+=======
+        return Compra.objects.all()
+>>>>>>> origin/AndresReaver02

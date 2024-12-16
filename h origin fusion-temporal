@@ -1,0 +1,60 @@
+* [33m0fd0103[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfusion-temporal[m[33m)[m Resueltos conflictos entre AndresReaver02 y ViveroActualizado
+* [33m3ba57e1[m[33m ([m[1;31morigin/AndresReaver02[m[33m)[m Funcionalidad de cliente, compras y facturacion ok Pendientes: las tablas correctamente conectadas -sigue pendiente
+* [33m42c933a[m[33m ([m[1;32mAndresReaver02[m[33m)[m Funcionalidad de cliente, compras y facturacion ok Pendientes: las tablas correctamente conectadas
+* [33m1e830bf[m modelo con inventario corregido
+* [33mb3d0018[m modelo con inventario
+[31m|[m *   [33m3e36893[m[33m ([m[1;32mmain[m[33m)[m Resueltos conflictos en el merge de J-TORO en main
+[31m|[m [32m|[m[33m\[m  
+[31m|[m [32m|[m * [33m508dfbf[m[33m ([m[1;31morigin/J-TORO[m[33m)[m actualizacion compra modulos
+[31m|[m [32m|[m * [33m80c4d71[m 101
+[31m|[m [32m|[m * [33m42c6246[m 1
+[31m|[m * [33m|[m [33m399d004[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Resueltos conflictos en el merge de Andresreaver a main
+[31m|[m * [33m|[m [33mf19c870[m Actualización de archivos
+[31m|[m [33m|[m [33m|[m * [33m65352c1[m[33m ([m[1;32mViveroActualizado[m[33m)[m Resueltos conflictos en el merge de main
+[31m|[m [33m|[m [33m|[m * [33m8884566[m[33m ([m[1;31morigin/ViveroActualizado[m[33m)[m se crea informe de ventas
+[31m|[m [33m|[m[31m_[m[33m|[m[31m/[m  
+[31m|[m[31m/[m[33m|[m [33m|[m   
+* [33m|[m [33m|[m [33mf81b2ae[m se ajusta factura
+* [33m|[m [33m|[m [33m1b81f0b[m se ajusta factura html
+* [33m|[m [33m|[m [33m63a6e93[m se soluciona problemas de renderización de clientes
+* [33m|[m [33m|[m [33m3e75690[m[33m ([m[1;31morigin/DeVC[m[33m, [m[1;32mDeVC[m[33m)[m cambio con proveedores integrado y ajustado
+[33m|[m [33m|[m[33m/[m  
+[33m|[m[33m/[m[33m|[m   
+* [33m|[m [33maf7f559[m cambio con proveedores integrado y ajustado
+[34m|[m [33m|[m * [33m9661ba9[m[33m ([m[1;31morigin/Jhajayna[m[33m)[m Compras aun no enlaza con producto pero si con proveedores, tener en cuanta que el nombre de proveedor esta guardado como nombre_razon_social
+[34m|[m [33m|[m *   [33me67e712[m Merge remote-tracking branch 'origin/Jhajayna' into Jhajayna
+[34m|[m [33m|[m [36m|[m[1;31m\[m  
+[34m|[m [33m|[m [36m|[m * [33m1da34a4[m Funcionalidades basicas clientes y proveedores
+[34m|[m [33m|[m * [1;31m|[m [33mffdc64a[m Funcionalidades basicas clientes y proveedores
+[34m|[m [33m|[m [1;31m|[m[1;31m/[m  
+[34m|[m [33m|[m * [33mb3ca1f0[m Proveedores
+[34m|[m [33m|[m * [33mab3b581[m Enmarquetado proveedor
+[34m|[m [33m|[m * [33m4f6c7b4[m Actualización de la estructura y los modelos
+[34m|[m [33m|[m [1;31m|[m * [33m808187d[m[33m ([m[1;31morigin/Modular[m[33m)[m Por modulos
+[34m|[m [33m|[m[34m_[m[1;31m|[m[34m/[m  
+[34m|[m[34m/[m[33m|[m [1;31m|[m   
+[34m|[m [33m|[m [1;31m|[m * [33meaa4e31[m[33m ([m[1;31morigin/Andresreaver[m[33m)[m Commit reversed
+[34m|[m [33m|[m [1;31m|[m *   [33me901e04[m Merge remote-tracking branch 'inventario-vivero/Andresreaver' into Andresreaver
+[34m|[m [33m|[m [1;31m|[m [1;34m|[m[1;35m\[m  
+[34m|[m [33m|[m [1;31m|[m [1;34m|[m * [33m33ba850[m maqquA;Mmffmlmjkskljhgkljhgaa-ñskihgnakljhfgafg{gjknfgjknfg-fdsggflkfdlkhgjuiughiughfdghdfgfd{aikjdfglikjdfgl{kjdfag
+[34m|[m [33m|[m [1;31m|[m * [1;35m|[m [33mb76dbec[m Cambios con rutas y modelos html
+[34m|[m [33m|[m [1;31m|[m * [1;35m|[m [33mf7e2b61[m Cambios con rutas y modelos html
+[34m|[m [33m|[m [1;31m|[m * [1;35m|[m [33m3bd46aa[m Cambios realizados en el modulo de facturacion
+[34m|[m [33m|[m[34m_[m[1;31m|[m[34m/[m [1;35m/[m  
+[34m|[m[34m/[m[33m|[m [1;31m|[m [1;35m|[m   
+* [33m|[m [1;31m|[m [1;35m|[m [33mb24c3c0[m crud de productos
+* [33m|[m [1;31m|[m [1;35m|[m [33mbb2ace2[m Actualización de la estructura y los modelos del error de guardado de usuarios
+[1;35m|[m [33m|[m[1;35m_[m[1;31m|[m[1;35m/[m  
+[1;35m|[m[1;35m/[m[33m|[m [1;31m|[m   
+* [33m|[m [1;31m|[m [33m0a6a72f[m Actualización de la estructura y los modelos
+[1;31m|[m [33m|[m[1;31m/[m  
+[1;31m|[m[1;31m/[m[33m|[m   
+* [33m|[m [33m6661106[m Actualizacion Login y creación de usuarios estrcutura de responsabilidad unica
+* [33m|[m [33m95aa0c5[m Actualizacion Login y creación de usuarios
+* [33m|[m [33m66bae6e[m Actualizacion vista productos
+* [33m|[m [33ma02a7f6[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m Creacion de modelos
+* [33m|[m [33m4bf284f[m Proyecto primer dia
+ [33m/[m  
+[33m|[m * [33m550fe1d[m[33m ([m[1;31morigin/juan-toro[m[33m)[m q3
+[33m|[m[33m/[m  
+* [33made8840[m Initial commit
