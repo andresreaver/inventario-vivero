@@ -1,0 +1,33 @@
+{% extends 'base_dashboard.html' %}
+
+{% block title %}Crear Producto - Vivero Andalucía{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Crear Producto</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="tipo" class="form-label">Tipo</label>
+            <input type="text" id="tipo" name="tipo" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="stock" class="form-label">Stock</label>
+            <input type="number" id="stock" name="stock" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="stock_minimo" class="form-label">Stock Mínimo</label>
+            <input type="number" id="stock_minimo" name="stock_minimo" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="fecha_caducidad" class="form-label">Fecha de Caducidad</label>
+            <input type="date" id="fecha_caducidad" name="fecha_caducidad" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+</div>
+{% endblock %}
