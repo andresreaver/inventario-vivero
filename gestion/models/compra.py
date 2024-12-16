@@ -16,8 +16,6 @@ class Compra(models.Model):
     def __str__(self):
         return f"{self.proveedor.nombre_razon_social} - {self.producto.nombre} ({self.cantidad})"
 
-<<<<<<< HEAD
+
     def total(self):
         return self.cantidad * self.precio_unitario
-=======
->>>>>>> origin/AndresReaver02
