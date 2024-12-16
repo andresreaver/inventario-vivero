@@ -1,8 +1,13 @@
 from django.urls import path
 from . import views
 from gestion.views.user_views import admin_dashboard, logout_view
+<<<<<<< HEAD
 from .views import user_views, producto_views, compra_views, crear_producto, editar_producto, eliminar_producto, \
     lista_compras, compras
+=======
+from .views import user_views, producto_views, compra_views, compras, crear_producto, editar_producto, eliminar_producto
+from .views.reports_views import informe_ventas, informe_ventas_pdf
+>>>>>>> origin/ViveroActualizado
 from .views.cliente_views import crear_cliente, listar_clientes, editar_cliente, eliminar_cliente
 from .views.factura_views import lista_facturas, crear_factura
 from .views.informe_views import informes
@@ -48,8 +53,14 @@ urlpatterns = [
     # path('facturas/<int:factura_id>/', detalle_factura_view, name='detalle_factura'),
     path('facturas/crear/', crear_factura, name='crear_factura'),
 
+<<<<<<< HEAD
     #Inventarios
     path('inventario/', inventario_actual, name='inventario_actual'),
     path('historial/', historial_movimientos, name='historial_movimientos'),
     path('descargar-informe/', descargar_informe, name='descargar_informe'),
+=======
+    path('informe-ventas/', informe_ventas, name='informe_ventas'),
+    path('informe-ventas/pdf/', informe_ventas_pdf, name='informe_ventas_pdf'),
+
+>>>>>>> origin/ViveroActualizado
 ]
