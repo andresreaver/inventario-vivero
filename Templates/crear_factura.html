@@ -45,10 +45,11 @@
                 <h5>Detalles de la Factura</h5>
             </div>
             <div class="card-body">
+                <!-- Primera fila de producto y cantidad -->
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="producto_1" class="form-label">Producto</label>
-                        <select name="producto" id="producto_1" class="form-select" required>
+                        <select name="producto[]" id="producto_1" class="form-select" required>
                             <option value="" disabled selected>Seleccione un producto</option>
                             {% for producto in productos %}
                             <option value="{{ producto.id }}">{{ producto.nombre }}</option>
@@ -59,7 +60,26 @@
                     </div>
                     <div class="col-md-6">
                         <label for="cantidad_1" class="form-label">Cantidad</label>
-                        <input type="number" name="cantidad" id="cantidad_1" class="form-control" placeholder="Ingrese la cantidad" min="1" required>
+                        <input type="number" name="cantidad[]" id="cantidad_1" class="form-control" placeholder="Ingrese la cantidad" min="1" required>
+                    </div>
+                </div>
+
+                <!-- Segunda fila de producto y cantidad (puedes duplicar manualmente si es necesario) -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="producto_2" class="form-label">Producto</label>
+                        <select name="producto[]" id="producto_2" class="form-select">
+                            <option value="" disabled selected>Seleccione un producto</option>
+                            {% for producto in productos %}
+                            <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                            {% empty %}
+                            <option disabled>No hay productos disponibles</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="cantidad_2" class="form-label">Cantidad</label>
+                        <input type="number" name="cantidad[]" id="cantidad_2" class="form-control" placeholder="Ingrese la cantidad" min="1">
                     </div>
                 </div>
             </div>

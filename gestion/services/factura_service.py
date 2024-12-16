@@ -7,37 +7,30 @@ class FacturaService:
     @staticmethod
     @transaction.atomic
     def crear_factura(cliente, forma_pago, detalles):
-        """
-        Crear una nueva factura para un cliente con los detalles dados.
-
-        Args:
-            cliente (Cliente): Instancia del cliente.
-            forma_pago (str): Forma de pago de la factura.
-            detalles (list): Lista de diccionarios con los productos y cantidades.
-                Ejemplo: [{'producto': producto_obj, 'cantidad': 2}, ...]
-
-        Returns:
-            Factura: La factura creada.
-        """
-        # Crear la factura inicial sin totales
-        factura = Factura(cliente=cliente, forma_pago=forma_pago)
-        factura.save()
+        print(f"Creando factura para cliente: {cliente.nombre_razon_social}, Forma de pago: {forma_pago}")
+        # Crear la factura
+        factura = Factura.objects.create(
+            cliente=cliente,
+            forma_pago=forma_pago,
+            subtotal=0,
+            iva=0,
+            total=0
+        )
+        print(f"Factura creada con ID: {factura.numero_factura}")
 
         subtotal = 0
-
         for detalle in detalles:
             producto = detalle['producto']
             cantidad = detalle['cantidad']
 
-            # Validar stock del producto
+            # Validar stock
             if producto.stock < cantidad:
-                raise ValueError(f"El producto {producto.nombre} no tiene suficiente stock.")
+                raise ValueError(f"No hay suficiente stock para {producto.nombre}")
 
-            # Reducir stock del producto
+            # Actualizar stock
             producto.stock -= cantidad
             producto.save()
 
-            # Calcular subtotal para el detalle
             subtotal_detalle = producto.precio_venta * cantidad
             subtotal += subtotal_detalle
 
@@ -49,17 +42,17 @@ class FacturaService:
                 precio_unitario=producto.precio_venta,
                 subtotal=subtotal_detalle
             )
+        print(f"Subtotal calculado: {subtotal}")
 
-        # Calcular impuestos y totales
         iva = subtotal * 0.19
         total = subtotal + iva
 
-        # Actualizar los totales en la factura
+        # Actualizar totales de la factura
         factura.subtotal = subtotal
         factura.iva = iva
         factura.total = total
         factura.save()
-
+        print(f"Factura actualizada con Total: {factura.total}")
         return factura
 
     @staticmethod

@@ -8,33 +8,26 @@ def crear_factura(request):
     if request.method == 'POST':
         cliente_id = request.POST.get('cliente')
         forma_pago = request.POST.get('forma_pago')
-        productos_ids = request.POST.getlist('producto')
-        cantidades = request.POST.getlist('cantidad')
-
-        if not cliente_id or not productos_ids or not cantidades:
-            messages.error(request, 'Debe seleccionar un cliente y al menos un producto con su cantidad.')
-            return redirect('crear_factura')
+        productos_ids = request.POST.getlist('producto[]')
+        cantidades = request.POST.getlist('cantidad[]')
 
         try:
-            # Obtener cliente
-            cliente = get_object_or_404(ClienteService.obtener_clientes(), id=cliente_id)
+            cliente = ClienteService.obtener_clientes().get(id=cliente_id)
 
-            # Preparar los detalles de la factura
+            # Preparar detalles
             detalles = []
             for producto_id, cantidad in zip(productos_ids, cantidades):
-                producto = get_object_or_404(ProductoService.obtener_productos(), id=producto_id)
+                producto = ProductoService.obtener_productos().get(id=producto_id)
                 detalles.append({'producto': producto, 'cantidad': int(cantidad)})
 
             # Crear la factura
             FacturaService.crear_factura(cliente, forma_pago, detalles)
-            messages.success(request, 'Factura creada exitosamente.')
+            messages.success(request, "Factura creada exitosamente.")
             return redirect('lista_facturas')
 
         except Exception as e:
-            messages.error(request, f'Error al crear la factura: {str(e)}')
-            return redirect('crear_factura')
+            messages.error(request, f"Error al crear la factura: {str(e)}")
 
-    # Renderizar el formulario con los datos necesarios
     clientes = ClienteService.obtener_clientes()
     productos = ProductoService.obtener_productos()
     return render(request, 'crear_factura.html', {'clientes': clientes, 'productos': productos})

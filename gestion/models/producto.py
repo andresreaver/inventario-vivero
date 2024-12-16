@@ -7,7 +7,7 @@ from gestion.managers import ProductoManager
 class Producto(models.Model):
     nombre = models.CharField(max_length=200, unique=True)
     tipo = models.CharField(max_length=100)
-    stock = models.IntegerField(default=0)
+    stock = models.PositiveIntegerField(default=0)
     stock_minimo = models.IntegerField(default=0)
     fecha_caducidad = models.DateField(null=True, blank=True)
     precio_compra = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
