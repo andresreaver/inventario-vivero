@@ -3,8 +3,12 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="text-center">Facturación - Vivero Andalucía</h2>
-    <form method="post">
+
+    <!-- Formulario de Factura -->
+    <form method="post" action="">
         {% csrf_token %}
+
+        <!-- Información del Cliente -->
         <div class="card mt-4">
             <div class="card-header bg-success text-white">
                 <h5>Información del Cliente</h5>
@@ -15,48 +19,53 @@
                         <label for="cliente" class="form-label">Cliente</label>
                         <select name="cliente" id="cliente" class="form-select" required>
                             <option value="" disabled selected>Seleccione un cliente</option>
-                            <!-- Opciones de clientes dinámicas -->
+                            {% for cliente in clientes %}
+                            <option value="{{ cliente.id }}">{{ cliente.nombre_razon_social }}</option>
+                            {% empty %}
+                            <option disabled>No hay clientes disponibles</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="col-md-6">
                         <label for="forma_pago" class="form-label">Forma de Pago</label>
                         <select name="forma_pago" id="forma_pago" class="form-select" required>
-                            <option value="efectivo">Efectivo</option>
-                            <option value="tarjeta">Tarjeta</option>
-                            <option value="transferencia">Transferencia</option>
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Tarjeta de Credito">Tarjeta de Crédito</option>
+                            <option value="Tarjeta Debito">Tarjeta Débito</option>
+                            <option value="Transferencia">Transferencia</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Detalles de los Productos -->
         <div class="card mt-4">
             <div class="card-header bg-success text-white">
-                <h5>Detalles</h5>
+                <h5>Detalles de la Factura</h5>
             </div>
             <div class="card-body">
-                <div id="detalle-productos">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="producto_1" class="form-label">Producto</label>
-                            <select name="producto" id="producto_1" class="form-select" required>
-                                <option value="" disabled selected>Seleccione un producto</option>
-                                <!-- Opciones dinámicas de productos -->
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="cantidad_1" class="form-label">Cantidad</label>
-                            <input type="number" name="cantidad" id="cantidad_1" class="form-control" placeholder="Ingrese la cantidad" required>
-                        </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="producto_1" class="form-label">Producto</label>
+                        <select name="producto" id="producto_1" class="form-select" required>
+                            <option value="" disabled selected>Seleccione un producto</option>
+                            {% for producto in productos %}
+                            <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                            {% empty %}
+                            <option disabled>No hay productos disponibles</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                    <!-- Puedes duplicar este bloque con JS para agregar más productos -->
-                </div>
-                <div class="text-center mt-3">
-                    <button type="button" class="btn btn-outline-secondary">Agregar Producto</button>
+                    <div class="col-md-6">
+                        <label for="cantidad_1" class="form-label">Cantidad</label>
+                        <input type="number" name="cantidad" id="cantidad_1" class="form-control" placeholder="Ingrese la cantidad" min="1" required>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- Botón para enviar el formulario -->
         <div class="text-center mt-4">
             <button type="submit" class="btn btn-success">Crear Factura</button>
         </div>

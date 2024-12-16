@@ -5,7 +5,7 @@ from .views import user_views, producto_views, compra_views, compras, crear_prod
 from .views.inventario_view import inventario_actual, historial_movimientos, descargar_informe
 from .views.reports_views import informe_ventas, informe_ventas_pdf
 from .views.cliente_views import crear_cliente, listar_clientes, editar_cliente, eliminar_cliente
-from .views.factura_views import lista_facturas, crear_factura
+from .views.factura_views import crear_factura, lista_facturas
 from .views.informe_views import informes
 from .views.proveedor_views import listar_proveedores, crear_proveedor, editar_proveedor, eliminar_proveedor
 from .views.venta_views import ventas, lista_ventas, registrar_venta
